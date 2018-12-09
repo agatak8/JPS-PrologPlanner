@@ -19,24 +19,24 @@ goals_achieved([HeadGoal | Rest], UnitedState) :-
 	goal_achieved(HeadGoal, UnitedState),
 	goals_achieved(Rest, UnitedState).
 	
-goal_achieved(clear(A/Gowno), State) :-
-	goal_achieved(Gowno, State),
+goal_achieved(clear(A/Goal), State) :-
+	goal_achieved(Goal, State),
 	member(clear(A), State).
 	
 goal_achieved(clear(A), State) :-
 	member(clear(A), State).
 
-goal_achieved(on(A/Gowno, B/Gowno2), UnitedState) :-
-	goal_achieved(Gowno, UnitedState),
-	goal_achieved(Gowno2, UnitedState),
+goal_achieved(on(A/Goal, B/Goal2), UnitedState) :-
+	goal_achieved(Goal, UnitedState),
+	goal_achieved(Goal2, UnitedState),
 	member(on(A, B), UnitedState).
 	
-goal_achieved(on(A, B/Gowno2), UnitedState) :-
-	goal_achieved(Gowno2, UnitedState),
+goal_achieved(on(A, B/Goal2), UnitedState) :-
+	goal_achieved(Goal2, UnitedState),
 	member(on(A, B), UnitedState).
 
-goal_achieved(on(A/Gowno, B), UnitedState) :-
-	goal_achieved(Gowno, UnitedState),
+goal_achieved(on(A/Goal, B), UnitedState) :-
+	goal_achieved(Goal, UnitedState),
 	member(on(A, B), UnitedState).
 
 choose_goal(Goal, [Goal | Goals], Goals, UnitedState) :-
