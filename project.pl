@@ -2,16 +2,16 @@ plan(State, Goals, [  ], State)   :-
 	goals_achieved(Goals, State) .
 
 plan(InitState, Goals, Plan, FinalState)   :-
-	choose_goal(Goal, Goals, RestGoals, InitState),
+	choose_goal(Goal, Goals, RestGoals, InitState), % pkt wyboru - kolejnosc goali moze miec znaczenie
 	achieves(Goal, Action),
 	requires(Action, CondGoals, Conditions), %% Conditions - warunki do ukonkretnienia zmiennych w momencie wykonywania akcji np zeby move(Co, Skad, Dokad) musi byc clear(Dokad) -> trzeba znalezc takie Dokad ktore to spelnia
 	%% CondGoals - warunki ktore staja sie celami (nie do ukonkretnienia zmiennych) np zeby miec move(Co, Skad, Dokad) gdzie Co jest konkretne, musimy miec clear(Co)
 	plan(InitState, CondGoals, PrePlan, State1),
-	inst_action(Action, Conditions, State1, InstAction),
+	inst_action(Action, Conditions, State1, InstAction), % pkt wyboru ponownie (miejsca do odstawienia)
 	perform_action(State1, InstAction, State2),
 	plan(State2, RestGoals, PostPlan, FinalState),
 	conc(PrePlan, [InstAction | PostPlan ], Plan).
-	
+
 goals_achieved([], _).
 
 goals_achieved([HeadGoal | Rest], UnitedState) :-

@@ -1,0 +1,15 @@
+% ETAP 2
+% ograniczenie liczby kroków czyli akcji, które będzie się zwiększało w sposób kontrolowany (BFS)
+% trzeba dzielic limit miedzy preplan i postplan - podpowiedzi do etapu 2 .pdf
+% LimitPre - probowac od 0 i zwiekszac o 1 (napisac wlasnorecznie!!!!!!!!!!!!)
+% zwiekszanie limitu - plan_wrapper wywolujacy plan z danym limitem, zapewniajac zwiekszenie limitu i ponowny start
+
+% niszczenie celi, np.
+% 1) cel clear(p3)
+% 2) cel on(b7,b8) -> co jesli dla tego celu przesuniemy Y/on(Y,b8) na p3?
+% ==> zapamietywanie celi, spr czy akcja ich nie niszczy
+
+% tryb interakcyjny - uzytkownik w inst_action bedzie widzial stan i mogl wybrac clear(klocek/pole) na ktorym umiescic
+% odpowiedz uzytkownika - struktura, np. "clear(p3)"
+% po nawrocie - powtarza to pytanie
+% uzytkownik moze takze napisac np. "cofnij" i wywolac niepowodzenie i nawrot poziom wyzej
