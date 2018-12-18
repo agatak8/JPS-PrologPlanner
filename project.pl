@@ -20,21 +20,28 @@ goals_achieved([HeadGoal | Rest], UnitedState) :-
 	goals_achieved(Rest, UnitedState).
 	
 goal_achieved(on(A, B), UnitedState) :-
+	% A \= _/_,
+	% B \= _/_,
 	member(on(A, B), UnitedState).
 
 goal_achieved(clear(A), State) :-
+	% A \= _/_,
 	member(clear(A), State).
 	
 goal_achieved(clear(A/Goal), State) :-
+	% goal_achieved(clear(X), [...])
+	
 	nonvar(Goal),
 	goal_achieved(Goal, State),
 	member(clear(A), State).
 
 goal_achieved(on(A, B/Goal2), UnitedState) :-
+	% A \= _/_,
 	nonvar(Goal2),
 	goal_achieved(Goal2, UnitedState),
 	member(on(A, B), UnitedState).
 
+% generalization only
 goal_achieved(on(A/Goal, B), UnitedState) :- 
 	nonvar(Goal),
 	goal_achieved(Goal, UnitedState),
@@ -49,7 +56,8 @@ goal_achieved(on(A/Goal, B/Goal2), UnitedState) :-
 	
 
 choose_goal(Goal, [Goal | Goals], Goals, UnitedState) :-
-	not(goals_achieved([Goal], UnitedState)).
+	% member(Goal, [Goal | Goals]),
+	not(goal_achieved(Goal, UnitedState)).
 	
 choose_goal(Goal, [X | Goals], [X | TailRestGoals], UnitedState) :-
 	choose_goal(Goal, Goals, TailRestGoals, UnitedState).
@@ -60,11 +68,21 @@ achieves(clear(B), move(A/on(A,B), B, C)).
 
 %% requires(Action, CondGoals, Conditions) :-CELE
 
+% TODO - wyczyscic!
+requires(move(What, From/on(What, From), On), [clear(What), clear(On)], [on(What, From)]) :-
+	nonvar(What),
+	nonvar(On).
+	%% var(From).
+
 requires(move(What, From, On), [clear(What), clear(On)], [on(What, From)]) :-
 	nonvar(What),
 	nonvar(On).
 	%% var(From).
-	
+
+requires(move(What/W1, From, On), [clear(What/W1)], [clear(On), On \= What/W1]) :-
+	% var(What),
+	var(On).
+	%% nonvar(From).
 
 requires(move(What, From, On), [clear(What)], [clear(On), On \= What]) :-
 	var(What),
