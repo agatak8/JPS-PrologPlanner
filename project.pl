@@ -23,11 +23,9 @@ goal_achieved(on(A, B), UnitedState) :-
 	member(on(A, B), UnitedState).
 
 goal_achieved(clear(A), State) :-
-	print("clear bezwarunkuf"),
 	member(clear(A), State).
 	
 goal_achieved(clear(A/Goal), State) :-
-	print("clear s warunkiem"),
 	nonvar(Goal),
 	goal_achieved(Goal, State),
 	member(clear(A), State).
