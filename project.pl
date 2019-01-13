@@ -3,9 +3,9 @@ plan_wrapper(InitState, Goals, MaxLimit, Plan, FinalState) :-
     is_between(0, MaxLimit, Limit),
     write("Trying Limit: "),
     write_ln(Limit),
-    plan(InitState, Goals, Limit, Plan, FinalState, 0).
+    plan(InitState, Goals, [], Limit, Plan, FinalState, 0).
 
-plan(State, Goals, _, [  ], State, RecursionLevel) :-
+plan(State, Goals, _, _, [], State, RecursionLevel) :-
     write("Recursion level is: "),
     write_ln(RecursionLevel),
 	goals_achieved(Goals, State),
@@ -14,7 +14,7 @@ plan(State, Goals, _, [  ], State, RecursionLevel) :-
 	% write(Goals),
 	% write_ln(" achieved!").
 
-plan(InitState, Goals, Limit, Plan, FinalState, RecursionLevel) :-
+plan(InitState, Goals, AchievedGoals, Limit, Plan, FinalState, RecursionLevel) :-
     Limit > 0,
     % wygeneruje LimitPre od 0 do Limit
     is_between(0, Limit-1, LimitPre),
@@ -33,12 +33,13 @@ plan(InitState, Goals, Limit, Plan, FinalState, RecursionLevel) :-
 	Rec2 is RecursionLevel + 1,
 	plan(InitState, CondGoals, LimitPre, PrePlan, State1, Rec2),
 	inst_action(Action, Conditions, State1, InstAction), % pkt wyboru ponownie (miejsca do odstawienia)
+	check_action(InstAction, AchievedGoals),
 	perform_action(State1, InstAction, State2),
 	% reszta idzie do LimitPost
 	LimitPost is Limit - LimitPre - 1,
 	write("LimitPost is: "),
 	write_ln(LimitPost),
-	plan(State2, RestGoals, LimitPost, PostPlan, FinalState, Rec2),
+	plan(State2, RestGoals, [Goal | AchievedGoals], LimitPost, PostPlan, FinalState, Rec2),
 	conc(PrePlan, [InstAction | PostPlan ], Plan).
 	
 plan(_, _, _, _, _, _) :-
@@ -117,3 +118,16 @@ requires(move(What, From/on(What, From), On), [clear(What), clear(On)], [on(What
 
 requires(move(What, From, On), [clear(What)], [clear(On), On \= What]) :-
 	var(On).
+
+% check_action(InstAction, AchievedGoals)
+check_action(_, []).
+
+check_action(InstAction, [Goal|Rest]) :-
+    check_if_action_destroys_goal(InstAction, Goal),
+    check_action(InstAction, Rest).
+
+% TODO - upewnic sie czy potrzeba zaimplementowac casey struktur _/_?
+check_if_action_destroys_goal(move(What, From, _), on(What, From)).
+check_if_action_destroys_goal(move(_, _, On), clear(On)).
+
+
