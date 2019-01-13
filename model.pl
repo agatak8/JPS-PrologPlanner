@@ -13,8 +13,13 @@ initialState(
 	clear(p5)]
 ).
 
+imports :-
+    consult('project.pl'),
+	consult('helpers.pl').
+
 testModel :-
-	consult('project.pl'),
+	imports,
+	set_logging_level(debug),
 	initialState(State),
 	write("State: "),
 	write_ln(State),
@@ -50,7 +55,8 @@ testGoals(Goals, State) :-
 	write_ln(" not achieved").
 
 testReq :-
-	consult('project.pl'),
+	imports,
+	set_logging_level(debug),
 	initialState(State),
 	Action = move(X3/on(X3, X2/on(X2,b4)),X2/on(X2,b4), Z3),
 	requires(Action, CondGoals, Conds),
@@ -70,3 +76,11 @@ testReq :-
 	Z2 = "Z2",
 	write_ln(CG3),
 	write_ln(C3).
+
+testPlanLimit :-
+    imports,
+    set_logging_level(debug),
+    initialState(State),
+    not(plan_wrapper(State, [on(a,d)], 0, _, _)),
+    plan_wrapper(State, [on(a,b)], 0, _, State),
+    not(plan_wrapper(State, [on(g,p5)], 3, Plan, FinState)).

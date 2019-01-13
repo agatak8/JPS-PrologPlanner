@@ -1,26 +1,54 @@
 plan_wrapper(InitState, Goals, MaxLimit, Plan, FinalState) :-
-    is_between(0, MaxLimit, Limit),
-    plan(InitState, Goals, Limit, Plan, FinalState).
-
-plan(State, Goals, _, [  ], State)   :-
-	goals_achieved(Goals, State) .
-
-plan(InitState, Goals, Limit, Plan, FinalState)   :-
     consult('helpers.pl'),
+    is_between(0, MaxLimit, Limit),
+    write("Trying Limit: "),
+    write_ln(Limit),
+    plan(InitState, Goals, Limit, Plan, FinalState, 0).
+
+plan(State, Goals, _, [  ], State, RecursionLevel) :-
+    write("Recursion level is: "),
+    write_ln(RecursionLevel),
+	goals_achieved(Goals, State),
+	write_ln("Achieved goal").
+	% write("Goals: "),
+	% write(Goals),
+	% write_ln(" achieved!").
+
+plan(InitState, Goals, Limit, Plan, FinalState, RecursionLevel) :-
     Limit > 0,
     % wygeneruje LimitPre od 0 do Limit
-    is_between(0, Limit, LimitPre),
+    is_between(0, Limit-1, LimitPre),
+    write("Trying LimitPre: "),
+    write_ln(LimitPre),
 	choose_goal(Goal, Goals, RestGoals, InitState), % pkt wyboru - kolejnosc goali moze miec znaczenie
 	achieves(Goal, Action),
+	% write("Chosen goal needs action: "),
+	% write_ln(Action),
 	requires(Action, CondGoals, Conditions), %% Conditions - warunki do ukonkretnienia zmiennych w momencie wykonywania akcji np zeby move(Co, Skad, Dokad) musi byc clear(Dokad) -> trzeba znalezc takie Dokad ktore to spelnia
 	%% CondGoals - warunki ktore staja sie celami (nie do ukonkretnienia zmiennych) np zeby miec move(Co, Skad, Dokad) gdzie Co jest konkretne, musimy miec clear(Co)
-	plan(InitState, CondGoals, LimitPre, PrePlan, State1),
+	% write("Action needs goals: "),
+	% write(CondGoals),
+	% write(" and conditions: "),
+	% write_ln(Conditions),
+	Rec2 is RecursionLevel + 1,
+	plan(InitState, CondGoals, LimitPre, PrePlan, State1, Rec2),
 	inst_action(Action, Conditions, State1, InstAction), % pkt wyboru ponownie (miejsca do odstawienia)
 	perform_action(State1, InstAction, State2),
 	% reszta idzie do LimitPost
 	LimitPost is Limit - LimitPre - 1,
-	plan(State2, RestGoals, LimitPost, PostPlan, FinalState),
+	write("LimitPost is: "),
+	write_ln(LimitPost),
+	plan(State2, RestGoals, LimitPost, PostPlan, FinalState, Rec2),
 	conc(PrePlan, [InstAction | PostPlan ], Plan).
+	
+plan(_, _, _, _, _, _) :-
+    write_ln("Failed to find plan within limit"),
+    fail.
+% DEBUG - TODO remove
+inst_action(_, _, _, _) :-
+    fail.
+perform_action(_, _, _) :-
+    fail.
 
 goals_achieved([], _).
 
