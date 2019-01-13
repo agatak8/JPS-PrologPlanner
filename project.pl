@@ -68,7 +68,7 @@ achieves(clear(B), move(A/on(A,B), B, C)).
 
 %% requires(Action, CondGoals, Conditions) :-CELE
 
-% TODO - wyczyscic!
+% TODO - wyczyscic?
 requires(move(What, From/on(What, From), On), [clear(What), clear(On)], [on(What, From)]) :-
 	nonvar(What),
 	nonvar(On).
@@ -79,13 +79,14 @@ requires(move(What, From, On), [clear(What), clear(On)], [on(What, From)]) :-
 	nonvar(On).
 	%% var(From).
 
-requires(move(What/W1, From, On), [clear(What/W1)], [clear(On), On \= What/W1]) :-
+% probably not needed?
+% requires(move(What/W1, From, On), [clear(What/W1)], [clear(On), On \= What/W1]) :-
 	% var(What),
-	var(On).
+	%var(On).
 	%% nonvar(From).
 
 requires(move(What, From, On), [clear(What)], [clear(On), On \= What]) :-
-	var(What),
+	% var(What),
 	var(On).
 	%% nonvar(From).
 
