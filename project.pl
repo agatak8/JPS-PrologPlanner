@@ -123,11 +123,11 @@ requires(move(What, From, On), [clear(What)], [clear(On), On \= What]) :-
 check_action(_, []).
 
 check_action(InstAction, [Goal|Rest]) :-
-    check_if_action_destroys_goal(InstAction, Goal),
+    not(action_destroys_goal(InstAction, Goal)),
     check_action(InstAction, Rest).
 
 % TODO - upewnic sie czy potrzeba zaimplementowac casey struktur _/_?
-check_if_action_destroys_goal(move(What, From, _), on(What, From)).
-check_if_action_destroys_goal(move(_, _, On), clear(On)).
+action_destroys_goal(move(What, From, _), on(What, From)).
+action_destroys_goal(move(_, _, On), clear(On)).
 
 
