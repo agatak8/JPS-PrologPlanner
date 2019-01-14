@@ -14,7 +14,7 @@ initialState(
 ).
 
 imports :-
-    consult('project.pl'),
+	consult('project.pl'),
 	consult('helpers.pl').
 
 testModel :-
@@ -76,11 +76,11 @@ testReq :-
 	write_ln(C3).
 
 testPlanLimit :-
-    imports,
-    initialState(State),
-    not(plan_wrapper(State, [on(a,d)], 0, _, _)),
-    plan_wrapper(State, [on(a,b)], 0, _, State),
-    not(plan_wrapper(State, [on(g,p5)], 3, Plan, FinState)).
+	imports,
+	initialState(State),
+	not(plan_wrapper(State, [on(a,d)], 0, _, _)),
+	plan_wrapper(State, [on(a,b)], 0, _, State),
+	not(plan_wrapper(State, [on(g,p5)], 3, Plan, FinState)).
 
 initialConditions([
 A/on(A, B/on(B, C)),
@@ -95,5 +95,7 @@ clear(D6/on(D6, E6/on(F6, E6)))
 condTest :-
 	imports,
 	initialState(State),
-	initialConditions(Conds),
-	inst_action(move(a, b, On), [clear(On)], State, InstAction).
+	% initialConditions(Conds),
+	inst_action(move(a, b, On), [clear(On), On \= a], State, InstAction),
+	write("InstAction: "),
+	write_ln(InstAction).
