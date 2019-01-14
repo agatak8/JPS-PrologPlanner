@@ -126,6 +126,43 @@ check_action(InstAction, [Goal|Rest]) :-
     not(action_destroys_goal(InstAction, Goal)),
     check_action(InstAction, Rest).
 
+% inst_action(Action, Conditions, State1, InstAction)
+inst_action(move(What, From, On), Conds, UnitedState, move(InstWhat, InstFrom, InstOn)) :-
+	conds_achieved(Conds, UnitedState),
+	inst_one(What, UnitedState, InstWhat),
+	inst_one(From, UnitedState, InstFrom),
+	inst_one(On, UnitedState, InstOn).   
+
+conds_achieved([], _).
+
+conds_achieved([A \= B | Rest], UnitedState) :-
+	A \= B,
+	conds_achieved(Rest, UnitedState).
+
+conds_achieved([\=(A/W, B) | Rest], UnitedState) :-
+	goal_achieved(W, UnitedState),
+	A \= B,
+	conds_achieved(Rest, UnitedState).
+
+conds_achieved([\=(A, B/W) | Rest], UnitedState) :-
+	goal_achieved(W, UnitedState),
+	A \= B,
+	conds_achieved(Rest, UnitedState).
+
+conds_achieved(\=(A/W, B/W2) | Rest], UnitedState) :-
+	goal_achieved(W, UnitedState),
+	goal_achieved(W2, UnitedState),
+	A \= B,
+	conds_achieved(Rest, UnitedState).
+
+conds_achieved([HeadGoal | Rest], UnitedState) :-
+        goal_achieved(HeadGoal, UnitedState),
+        conds_achieved(Rest, UnitedState).
+
+inst_one(A/B, UnitedState, A) :-
+	goal_achieved(B, UnitedState).
+
+inst_one(A, UnitedState, A).
 % TODO - upewnic sie czy potrzeba zaimplementowac casey struktur _/_?
 action_destroys_goal(move(What, From, _), on(What, From)).
 action_destroys_goal(move(_, _, On), clear(On)).
