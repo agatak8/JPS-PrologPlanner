@@ -141,28 +141,28 @@ inst_action(move(What, From, On), Conds, UnitedState, move(InstWhat, InstFrom, I
 
 conds_achieved([], _).
 
-conds_achieved([\=(A/W, B/W2) | Rest], UnitedState) :-
+conds_achieved([safe_diff(A/W, B/W2) | Rest], UnitedState) :-
 	goal_achieved(W, UnitedState),
 	goal_achieved(W2, UnitedState),
 	safe_diff(A, B),
 	conds_achieved(Rest, UnitedState).
 
-conds_achieved([\=(A, B/W) | Rest], UnitedState) :-
+conds_achieved([safe_diff(A, B/W) | Rest], UnitedState) :-
 	goal_achieved(W, UnitedState),
 	safe_diff(A, B),
 	conds_achieved(Rest, UnitedState).
 
-conds_achieved([\=(A/W, B) | Rest], UnitedState) :-
+conds_achieved([safe_diff(A/W, B) | Rest], UnitedState) :-
 	goal_achieved(W, UnitedState),
 	safe_diff(A, B),
 	conds_achieved(Rest, UnitedState).
 
-conds_achieved([\=(A, B) | Rest], UnitedState) :-
+conds_achieved([safe_diff(A, B) | Rest], UnitedState) :-
 	safe_diff(A, B),
 	conds_achieved(Rest, UnitedState).
 
 conds_achieved([HeadGoal | Rest], UnitedState) :-
-	HeadGoal \= \=(_, _),
+	HeadGoal \= safe_diff(_, _),
 	goal_achieved(HeadGoal, UnitedState),  
 	conds_achieved(Rest, UnitedState).
 
