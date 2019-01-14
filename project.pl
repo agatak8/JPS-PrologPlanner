@@ -123,10 +123,11 @@ check_action(InstAction, [Goal|Rest]) :-
 
 % inst_action(Action, Conditions, State1, InstAction)
 inst_action(move(What, From, On), Conds, UnitedState, move(InstWhat, InstFrom, InstOn)) :-
-	conds_achieved(Conds, UnitedState),
 	inst_one(What, UnitedState, InstWhat),
 	inst_one(From, UnitedState, InstFrom),
-	inst_one(On, UnitedState, InstOn).   
+	inst_one(On, UnitedState, InstOn),
+	conds_achieved(Conds, UnitedState),
+	write_ln(InstFrom).
 
 conds_achieved([], _).
 
@@ -144,15 +145,22 @@ conds_achieved([\=(A, B/W) | Rest], UnitedState) :-
 	A \= B,
 	conds_achieved(Rest, UnitedState).
 
-conds_achieved(\=(A/W, B/W2) | Rest], UnitedState) :-
+conds_achieved([\=(A/W, B/W2) | Rest], UnitedState) :-
 	goal_achieved(W, UnitedState),
 	goal_achieved(W2, UnitedState),
 	A \= B,
 	conds_achieved(Rest, UnitedState).
 
 conds_achieved([HeadGoal | Rest], UnitedState) :-
+	write("Cond : "),
+	write_ln(HeadGoal),
         goal_achieved(HeadGoal, UnitedState),
+	write_ln("succ"),        
         conds_achieved(Rest, UnitedState).
+
+conds_achieved(DUPA, DUPA2) :-
+	write_ln("file"),
+	fail.
 
 inst_one(A/B, UnitedState, A) :-
 	goal_achieved(B, UnitedState).

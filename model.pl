@@ -81,3 +81,19 @@ testPlanLimit :-
     not(plan_wrapper(State, [on(a,d)], 0, _, _)),
     plan_wrapper(State, [on(a,b)], 0, _, State),
     not(plan_wrapper(State, [on(g,p5)], 3, Plan, FinState)).
+
+initialConditions([
+A/on(A, B/on(B, C)),
+A1/on(A1, B1),
+A2/on(B2/on(C2, B2), A2),
+on(A3, B3),
+clear(C4),
+clear(D5/on(D5, E5)),
+clear(D6/on(D6, E6/on(F6, E6)))
+]).
+
+condTest :-
+	imports,
+	initialState(State),
+	initialConditions(Conds),
+	inst_action(move(a, b, On), [clear(On)], State, InstAction).
