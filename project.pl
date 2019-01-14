@@ -45,11 +45,6 @@ plan(InitState, Goals, AchievedGoals, Limit, Plan, FinalState, RecursionLevel) :
 plan(_, _, _, _, _, _) :-
     write_ln("Failed to find plan within limit"),
     fail.
-% DEBUG - TODO remove
-inst_action(_, _, _, _) :-
-    fail.
-perform_action(_, _, _) :-
-    fail.
 
 goals_achieved([], _).
 
