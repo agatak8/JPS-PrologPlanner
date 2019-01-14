@@ -17,9 +17,6 @@ non_slash(A) :-
 non_slash(A) :-
 	A \= _/_.
 
-safe_diff(A, A) :-
-	fail.
-
 safe_diff(A/_, B/_) :-
 	dif(A, B).
 	

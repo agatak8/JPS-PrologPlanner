@@ -6,11 +6,11 @@ initialState(
 	on(e, f),
 	on(f, g),
 	on(g, p2),
-	clear(a),
-	clear(d),
-	clear(p3),
-	clear(p4),
-	clear(p5)]
+	% clear(a),
+	clear(d)]
+	% clear(p3),
+	% clear(p4),
+	% clear(p5)]
 ).
 
 imports :-
@@ -113,3 +113,33 @@ condTest :-
 	inst_action(move(What, From3, Z3), [clear(Z3), safe_diff(Z3, What)], State, InstAction5),
 	write("InstAction: "),
 	write_ln(InstAction5).
+
+condTestAll :-
+    imports,
+	initialState(State),
+	What = X3/on(X3, X2/on(X2,f)),
+	From3 = X2/on(X2,f),
+	findall(InstAction, inst_action(move(What, From3, Z3), [clear(Z3), safe_diff(Z3, What)], State, InstAction), InstActions),
+	write("InstActions: "),
+	write_ln(InstActions).
+
+testDif :-
+    dif(A, B),
+    A is 1,
+    B is 1.
+
+testDif2 :-
+    dif(A, B),
+    A is 1,
+    B is 2.
+    
+testDif3 :-
+    not(dif(A, B)),
+    A is 1,
+    B is 2.
+
+testEq :-
+    \=(A, B),
+    A is 1,
+    B is 2.
+    
