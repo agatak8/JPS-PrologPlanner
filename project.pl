@@ -141,29 +141,33 @@ inst_action(move(What, From, On), Conds, UnitedState, move(InstWhat, InstFrom, I
 
 conds_achieved([], _).
 
+conds_achieved([safe_diff(A, B) | Rest], UnitedState) :-
+    non_slash(A),
+    non_slash(B),
+    conds_achieved(Rest, UnitedState), !,
+	safe_diff(A, B).
+	
+conds_achieved([safe_diff(A, B/W) | Rest], UnitedState) :-
+    non_slash(A),
+	goal_achieved(W, UnitedState),
+	conds_achieved(Rest, UnitedState), !,
+	safe_diff(A, B).
+
+conds_achieved([safe_diff(A/W, B) | Rest], UnitedState) :-
+    non_slash(B),
+	goal_achieved(W, UnitedState),
+	conds_achieved(Rest, UnitedState), !,
+	safe_diff(A, B).
+
 conds_achieved([safe_diff(A/W, B/W2) | Rest], UnitedState) :-
 	goal_achieved(W, UnitedState),
 	goal_achieved(W2, UnitedState),
-	safe_diff(A, B),
-	conds_achieved(Rest, UnitedState).
-
-conds_achieved([safe_diff(A, B/W) | Rest], UnitedState) :-
-	goal_achieved(W, UnitedState),
-	safe_diff(A, B),
-	conds_achieved(Rest, UnitedState).
-
-conds_achieved([safe_diff(A/W, B) | Rest], UnitedState) :-
-	goal_achieved(W, UnitedState),
-	safe_diff(A, B),
-	conds_achieved(Rest, UnitedState).
-
-conds_achieved([safe_diff(A, B) | Rest], UnitedState) :-
-	safe_diff(A, B),
-	conds_achieved(Rest, UnitedState).
+	conds_achieved(Rest, UnitedState), !,
+	safe_diff(A, B).
 
 conds_achieved([HeadGoal | Rest], UnitedState) :-
 	HeadGoal \= safe_diff(_, _),
-	goal_achieved(HeadGoal, UnitedState),  
+	goal_achieved(HeadGoal, UnitedState),
 	conds_achieved(Rest, UnitedState).
 
 conds_achieved(D, _) :-
@@ -175,7 +179,12 @@ inst_one(A, UnitedState, A) :-
 	non_slash(A).
 	
 inst_one(A/B, UnitedState, A) :-
-	write_ln(A/B),
+    % zeby nie generowac nowych zmiennych postaci Zmienna/Zmienna2 po nawrocie
+    var(A),
+    var(B), !,
+	fail.
+	
+inst_one(A/B, UnitedState, A) :-
 	goal_achieved(B, UnitedState).
 	
 % TODO - upewnic sie czy potrzeba zaimplementowac casey struktur _/_?

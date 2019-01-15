@@ -123,6 +123,11 @@ condTestAll :-
 	write("InstActions: "),
 	write_ln(InstActions).
 
+condAchieveTest :-
+    imports,
+    initialState(State),
+    conds_achieved([safe_diff(X, X/on(X,c))], State).
+
 testDif :-
     dif(A, B),
     A is 1,
