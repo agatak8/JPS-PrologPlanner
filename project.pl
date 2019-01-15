@@ -24,8 +24,7 @@ plan(InitState, Goals, AchievedGoals, Limit, Plan, FinalState, RecursionLevel) :
 	achieves(Goal, Action),
 	% write("Chosen goal needs action: "),
 	% write_ln(Action),
-	requires(Action, CondGoals, Conditions), %% Conditions - warunki do ukonkretnienia zmiennych w momencie wykonywania akcji np zeby move(Co, Skad, Dokad) musi byc clear(Dokad) -> trzeba znalezc takie Dokad ktore to spelnia
-	%% CondGoals - warunki ktore staja sie celami (nie do ukonkretnienia zmiennych) np zeby miec move(Co, Skad, Dokad) gdzie Co jest konkretne, musimy miec clear(Co)
+	requires(Action, CondGoals, Conditions),
 	% write("Action needs goals: "),
 	% write(CondGoals),
 	% write(" and conditions: "),
