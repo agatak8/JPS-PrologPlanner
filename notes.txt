@@ -13,3 +13,9 @@
 % odpowiedz uzytkownika - struktura, np. "clear(p3)"
 % po nawrocie - powtarza to pytanie
 % uzytkownik moze takze napisac np. "cofnij" i wywolac niepowodzenie i nawrot poziom wyzej
+
+% ZAKONCZENIE
+% przyklady skomentowane dla uzytkownika ktory nie zna algorytmu
+% - przyklad na dzialanie limitu (nawrot, po nawrocie, limit wyczerpany itp)
+% - przyklad jak dziala ochrona celow (jak dziala nawrot po probie zniszczenia celow) - auto
+% - przyklad ze sterowaniem przez uzytkownika

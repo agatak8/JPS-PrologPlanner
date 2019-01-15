@@ -5,30 +5,25 @@ plan_wrapper(InitState, Goals, MaxLimit, Plan, FinalState) :-
 	write_ln(Limit),
 	plan(InitState, Goals, [], Limit, Plan, FinalState, 0).
 
-plan(State, Goals, _, _, [], State, RecursionLevel) :-
-	write("Recursion level is: "),
-	write_ln(RecursionLevel),
-	goals_achieved(Goals, State),
-	write_ln("Achieved goal").
-	% write("Goals: "),
-	% write(Goals),
-	% write_ln(" achieved!").
-
-plan(InitState, Goals, AchievedGoals, Limit, Plan, FinalState, RecursionLevel) :-
-	Limit > 0,
-	write("Recursion: "),
-	write_ln(RecursionLevel),
-	write("Goals: "),
-	write_ln(Goals),
+plan(State, Goals, AchievedGoals, _, [], State, RecursionLevel) :-
 	write("AchievedGoals: "),
 	write_ln(AchievedGoals),
+	goals_achieved(Goals, State),
+	write_ln("Achieved goal").
+	
+plan(InitState, Goals, AchievedGoals, Limit, Plan, FinalState, RecursionLevel) :-
+	Limit > 0,
+	% write("Recursion: "),
+	% write_ln(RecursionLevel),
 	% wygeneruje LimitPre od 0 do Limit
 	is_between(0, Limit-1, LimitPre),
-	write("Trying LimitPre: "),
-	write_ln(LimitPre),
+	%write("Trying LimitPre: "),
+	%write_ln(LimitPre),
 	choose_goal(Goal, Goals, RestGoals, InitState), % pkt wyboru - kolejnosc goali moze miec znaczenie
 	achieves(Goal, Action),
-	write("Chosen goal needs action: "),
+	write("Chosen goal: "),
+	write(Goal),
+	write(" needs action: "),
 	write_ln(Action),
 	requires(Action, CondGoals, Conditions),
 	write("Action needs goals: "),
@@ -43,14 +38,17 @@ plan(InitState, Goals, AchievedGoals, Limit, Plan, FinalState, RecursionLevel) :
 	write("State1: "),
 	write_ln(State1),
 	inst_action(Action, Conditions, State1, InstAction), % pkt wyboru ponownie (miejsca do odstawienia)
-	check_action(InstAction, AchievedGoals),
+	%check_action(InstAction, AchievedGoals),
+	%write("InstAction is: "),
+	%write_ln(InstAction),
+	%write_ln("Performing action..."),
 	perform_action(State1, InstAction, State2),
 	write("State2: "),
 	write_ln(State2),
 	% reszta idzie do LimitPost
-	LimitPost is Limit - LimitPre - 1,
-	write("LimitPost is: "),
-	write_ln(LimitPost),
+	LimitPost is Limit - LimitPre,
+	%write("LimitPost is: "),
+	%write_ln(LimitPost),
 	plan(State2, RestGoals, [Goal | AchievedGoals], LimitPost, PostPlan, FinalState, Rec2),
 	conc(PrePlan, [InstAction | PostPlan ], Plan).
 	
@@ -65,10 +63,10 @@ goals_achieved([HeadGoal | Rest], UnitedState) :-
 	goal_achieved(HeadGoal, UnitedState),
 	goals_achieved(Rest, UnitedState).
 
-goal_achieved(A, _) :-
-	write("Checking if goal achieved: "),
-	write_ln(A),
-	fail.
+%goal_achieved(A, _) :-
+	%write("Checking if goal achieved: "),
+	%write_ln(A),
+%	fail.
 	
 goal_achieved(on(A, B), UnitedState) :-
 	non_slash(A),
@@ -132,11 +130,25 @@ requires(move(What, From, On), [clear(What)], [clear(On), safe_diff(On, What)]) 
 	var(On).
 
 % check_action(InstAction, AchievedGoals)
+check_action(A, G) :-
+    write("Testing if: "),
+    write(A),
+    write(" would destroy goal: "),
+    write_ln(G),
+    fail.
+
 check_action(_, []).
 
 check_action(InstAction, [Goal|Rest]) :-
 	not(action_destroys_goal(InstAction, Goal)),
 	check_action(InstAction, Rest).
+
+check_action(A, G) :-
+    write("Action: ")
+    write(A),
+    write(" would destroy goal: "),
+    write_ln(G),
+    fail.
 
 action_destroys_goal(move(What, From, _), on(What, From)).
 
@@ -201,28 +213,39 @@ conds_achieved(D, _) :-
 	write_ln(D),
 	fail.
 
-%inst_one(A, UnitedState, UserInput) :-
-    %var(A),
-    %write_ln(UnitedState),
-    %write("Wybierz wartosc dla "),
-    %write(A),
-    %write_ln(":"),
-    %read(UserInput),
-    %UserInput \= "cofnij", !.
-	
-inst_one(A, UnitedState, A) :-
-	non_slash(A).
+inst_one(A, UnitedState, UserInput) :-
+    var(A),
+    write_ln(UnitedState),
+    write("Wybierz wartosc dla "),
+    write(A),
+    write_ln(":"),
+    read(UserInput),
+    process_user_input(A, UnitedState, UserInput), !.
+
+process_user_input(A, US, UserInput) :-
+    UserInput \= 'cofnij'.
+
+process_user_input(A, US, UserInput) :-
+    UserInput \= 'cofnij',
+    inst_one(A, US, UserInput).
 	
 inst_one(A/B, UnitedState, A) :-
     % zeby nie generowac nowych zmiennych postaci Zmienna/Zmienna2 po nawrocie
     var(A),
-    var(B), !,
+    var(B),
 	fail.
 	
 inst_one(A/B, UnitedState, A) :-
+    nonvar(B),
 	goal_achieved(B, UnitedState).
+	
+inst_one(A, UnitedState, A) :-
+	nonvar(A),
+	non_slash(A).
 
 perform_action(State1, move(What, From, On), [on(What, On), clear(From) | PartialRes]) :-
-    delete(clear(On), State1, PartialPartialRes),
-    delete(on(What, From), PartialPartialRes, PartialRes).
+    member(clear(On), State1),
+    member(on(What, From), State1),
+    delete(State1, clear(On), PartialPartialRes),
+    delete(PartialPartialRes, on(What, From), PartialRes).
 
