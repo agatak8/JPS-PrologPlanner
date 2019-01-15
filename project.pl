@@ -16,8 +16,12 @@ plan(State, Goals, _, _, [], State, RecursionLevel) :-
 
 plan(InitState, Goals, AchievedGoals, Limit, Plan, FinalState, RecursionLevel) :-
 	Limit > 0,
-	write("Recurssion: "),
+	write("Recursion: "),
 	write_ln(RecursionLevel),
+	write("Goals: "),
+	write_ln(Goals),
+	write("AchievedGoals: "),
+	write_ln(AchievedGoals),
 	% wygeneruje LimitPre od 0 do Limit
 	is_between(0, Limit-1, LimitPre),
 	write("Trying LimitPre: "),
@@ -32,10 +36,17 @@ plan(InitState, Goals, AchievedGoals, Limit, Plan, FinalState, RecursionLevel) :
 	write(" and conditions: "),
 	write_ln(Conditions),
 	Rec2 is RecursionLevel + 1,
-	plan(InitState, CondGoals, LimitPre, PrePlan, State1, Rec2),
+	write_ln("Making PrePlan to reach action goals..."),
+	plan(InitState, CondGoals, AchievedGoals, LimitPre, PrePlan, State1, Rec2),
+	write("PrePlan: "),
+	write_ln(PrePlan),
+	write("State1: "),
+	write_ln(State1),
 	inst_action(Action, Conditions, State1, InstAction), % pkt wyboru ponownie (miejsca do odstawienia)
 	check_action(InstAction, AchievedGoals),
 	perform_action(State1, InstAction, State2),
+	write("State2: "),
+	write_ln(State2),
 	% reszta idzie do LimitPost
 	LimitPost is Limit - LimitPre - 1,
 	write("LimitPost is: "),
@@ -107,11 +118,6 @@ achieves(on(A, B), move(A, Y/(on(A, Y)), B)).
 achieves(clear(B), move(A/on(A,B), B, C)).
 
 %% requires(Action, CondGoals, Conditions) :-CELE
-
-requires(A, _, _) :-
-	write("requires: "),
-        write_ln(A),
-	fail.
 
 requires(move(What, From, On), [clear(What), clear(On)], [on(What, From)]) :-
 	non_slash(From),
@@ -195,14 +201,14 @@ conds_achieved(D, _) :-
 	write_ln(D),
 	fail.
 
-inst_one(A, UnitedState, UserInput) :-
-    var(A),
-    write_ln(UnitedState),
-    write("Wybierz wartosc dla "),
-    write(A),
-    write_ln(":"),
-    read(UserInput),
-    UserInput \= "cofnij", !.
+%inst_one(A, UnitedState, UserInput) :-
+    %var(A),
+    %write_ln(UnitedState),
+    %write("Wybierz wartosc dla "),
+    %write(A),
+    %write_ln(":"),
+    %read(UserInput),
+    %UserInput \= "cofnij", !.
 	
 inst_one(A, UnitedState, A) :-
 	non_slash(A).
@@ -217,6 +223,6 @@ inst_one(A/B, UnitedState, A) :-
 	goal_achieved(B, UnitedState).
 
 perform_action(State1, move(What, From, On), [on(What, On), clear(From) | PartialRes]) :-
-    remove_element(clear(On), State1, PartialPartialRes),
-    remove_element(on(What, From), PartialPartialRes, PartialRes).
+    delete(clear(On), State1, PartialPartialRes),
+    delete(on(What, From), PartialPartialRes, PartialRes).
 

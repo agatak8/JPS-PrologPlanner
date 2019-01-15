@@ -28,10 +28,3 @@ safe_diff(A, B/_) :-
 
 safe_diff(A, B) :-
 	dif(A, B).
-
-remove_element(E, [], []).
-
-remove_element(E, [E | Rest], Rest).
-
-remove_element(E, [X | Rest], [X | RestResult]) :-
-    remove_element(E, Rest, RestResult).
