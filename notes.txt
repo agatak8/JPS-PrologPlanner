@@ -19,3 +19,6 @@
 % - przyklad na dzialanie limitu (nawrot, po nawrocie, limit wyczerpany itp)
 % - przyklad jak dziala ochrona celow (jak dziala nawrot po probie zniszczenia celow) - auto
 % - przyklad ze sterowaniem przez uzytkownika
+%
+% pt - 13-16
+% czw - 14-16 bez 15-15.30 (inny zespol)
