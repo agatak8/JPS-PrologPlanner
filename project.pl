@@ -126,6 +126,11 @@ check_action(InstAction, [Goal|Rest]) :-
 	not(action_destroys_goal(InstAction, Goal)),
 	check_action(InstAction, Rest).
 
+action_destroys_goal(move(What, From, _), on(What, From)).
+
+action_destroys_goal(move(_, _, On), clear(On)).
+
+
 % inst_action(Action, Conditions, State1, InstAction)
 inst_action(move(What, From, On), Conds, UnitedState, move(InstWhat, InstFrom, InstOn)) :-
 	write_ln("Inst action:"),
@@ -175,6 +180,15 @@ conds_achieved(D, _) :-
 	write_ln(D),
 	fail.
 
+inst_one(A, UnitedState, UserInput) :-
+    var(A),
+    write_ln(UnitedState),
+    write("Wybierz wartosc dla "),
+    write(A),
+    write_ln(":")
+    read(UserInput),
+    UserInput \= "cofnij", !.
+	
 inst_one(A, UnitedState, A) :-
 	non_slash(A).
 	
@@ -190,8 +204,4 @@ inst_one(A/B, UnitedState, A) :-
 perform_action(State1, move(What, From, On), [on(What, On), clear(From) | PartialRes]) :-
     remove_element(clear(On), State1, PartialPartialRes),
     remove_element(on(What, From), PartialPartialRes, PartialRes).
-
-action_destroys_goal(move(What, From, _), on(What, From)).
-action_destroys_goal(move(_, _, On), clear(On)).
-
 
