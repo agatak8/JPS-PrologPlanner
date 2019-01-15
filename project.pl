@@ -186,8 +186,11 @@ inst_one(A/B, UnitedState, A) :-
 	
 inst_one(A/B, UnitedState, A) :-
 	goal_achieved(B, UnitedState).
-	
-% TODO - upewnic sie czy potrzeba zaimplementowac casey struktur _/_?
+
+perform_action(State1, move(What, From, On), [on(What, On), clear(From) | PartialRes]) :-
+    remove_element(clear(On), State1, PartialPartialRes),
+    remove_element(on(What, From), PartialPartialRes, PartialRes).
+
 action_destroys_goal(move(What, From, _), on(What, From)).
 action_destroys_goal(move(_, _, On), clear(On)).
 
