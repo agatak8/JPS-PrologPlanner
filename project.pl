@@ -16,19 +16,21 @@ plan(State, Goals, _, _, [], State, RecursionLevel) :-
 
 plan(InitState, Goals, AchievedGoals, Limit, Plan, FinalState, RecursionLevel) :-
 	Limit > 0,
+	write("Recurssion: "),
+	write_ln(RecursionLevel),
 	% wygeneruje LimitPre od 0 do Limit
 	is_between(0, Limit-1, LimitPre),
 	write("Trying LimitPre: "),
 	write_ln(LimitPre),
 	choose_goal(Goal, Goals, RestGoals, InitState), % pkt wyboru - kolejnosc goali moze miec znaczenie
 	achieves(Goal, Action),
-	% write("Chosen goal needs action: "),
-	% write_ln(Action),
+	write("Chosen goal needs action: "),
+	write_ln(Action),
 	requires(Action, CondGoals, Conditions),
-	% write("Action needs goals: "),
-	% write(CondGoals),
-	% write(" and conditions: "),
-	% write_ln(Conditions),
+	write("Action needs goals: "),
+	write(CondGoals),
+	write(" and conditions: "),
+	write_ln(Conditions),
 	Rec2 is RecursionLevel + 1,
 	plan(InitState, CondGoals, LimitPre, PrePlan, State1, Rec2),
 	inst_action(Action, Conditions, State1, InstAction), % pkt wyboru ponownie (miejsca do odstawienia)
@@ -106,6 +108,11 @@ achieves(clear(B), move(A/on(A,B), B, C)).
 
 %% requires(Action, CondGoals, Conditions) :-CELE
 
+requires(A, _, _) :-
+	write("requires: "),
+        write_ln(A),
+	fail.
+
 requires(move(What, From, On), [clear(What), clear(On)], [on(What, From)]) :-
 	non_slash(From),
 	nonvar(What),
@@ -131,6 +138,15 @@ action_destroys_goal(move(_, _, On), clear(On)).
 
 
 % inst_action(Action, Conditions, State1, InstAction)
+inst_action(A, CONDS, STATE, _) :-
+	write("inst_action: ACTION: "),
+	write(A),
+	write(" CONDS: "),
+	write(CONDS),
+	write(" STATE: "),
+	write_ln(STATE),
+	fail.
+
 inst_action(move(What, From, On), Conds, UnitedState, move(InstWhat, InstFrom, InstOn)) :-
 	write_ln("Inst action:"),
 	write_ln(What),
@@ -184,7 +200,7 @@ inst_one(A, UnitedState, UserInput) :-
     write_ln(UnitedState),
     write("Wybierz wartosc dla "),
     write(A),
-    write_ln(":")
+    write_ln(":"),
     read(UserInput),
     UserInput \= "cofnij", !.
 	

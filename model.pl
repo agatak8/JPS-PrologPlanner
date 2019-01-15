@@ -6,11 +6,11 @@ initialState(
 	on(e, f),
 	on(f, g),
 	on(g, p2),
-	% clear(a),
-	clear(d)]
-	% clear(p3),
-	% clear(p4),
-	% clear(p5)]
+	clear(a),
+	clear(d),
+	clear(p3),
+	clear(p4),
+	clear(p5)]
 ).
 
 imports :-
@@ -147,4 +147,8 @@ testEq :-
     \=(A, B),
     A is 1,
     B is 2.
-    
+
+planTest :-
+	imports,
+	initialState(State),
+	plan_wrapper(State, [on(a, f)], 50, Plan, FinalState).    
