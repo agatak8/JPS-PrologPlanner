@@ -170,9 +170,9 @@ inst_action(move(What, From, On), Conds, UnitedState, move(InstWhat, InstFrom, I
 	write_ln(What),
 	write_ln(From),
 	write_ln(On),
-	inst_one(What, UnitedState, InstWhat),
-	inst_one(From, UnitedState, InstFrom),
-	inst_one(On, UnitedState, InstOn),
+	inst_test(What, UnitedState, InstWhat),
+	inst_test(From, UnitedState, InstFrom),
+	inst_test(On, UnitedState, InstOn),
 	conds_achieved(Conds, UnitedState),
 	write("Achieved conditions: "),
 	write_ln(Conds).
@@ -213,8 +213,15 @@ conds_achieved(D, _) :-
 	write_ln(D),
 	fail.
 
-inst_one(A, UnitedState, UserInput) :-
+inst_test(A, US, UI) :-
+    nonvar(A),
+    inst_one(A, US, UI).
+	
+inst_test(A, US, UI) :-
     var(A),
+    prompt_user_input(A, US, UI).
+
+prompt_user_input(A, UnitedState, UserInput) :-
     write_ln(UnitedState),
     write("Wybierz wartosc dla "),
     write(A),
@@ -227,7 +234,7 @@ process_user_input(A, US, UserInput) :-
 
 process_user_input(A, US, UserInput) :-
     UserInput \= 'cofnij',
-    inst_one(A, US, UserInput).
+    prompt_user_input(A, US, UserInput).
 	
 inst_one(A/B, UnitedState, A) :-
     % zeby nie generowac nowych zmiennych postaci Zmienna/Zmienna2 po nawrocie
