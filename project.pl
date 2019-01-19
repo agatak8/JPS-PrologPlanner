@@ -170,9 +170,9 @@ inst_action(move(What, From, On), Conds, UnitedState, move(InstWhat, InstFrom, I
 	write_ln(What),
 	write_ln(From),
 	write_ln(On),
-	inst_test(What, UnitedState, InstWhat),
-	inst_test(From, UnitedState, InstFrom),
-	inst_test(On, UnitedState, InstOn),
+	inst_one(What, UnitedState, InstWhat),
+	inst_one(From, UnitedState, InstFrom),
+	inst_one(On, UnitedState, InstOn),
 	conds_achieved(Conds, UnitedState),
 	write("Achieved conditions: "),
 	write_ln(Conds).
@@ -235,6 +235,7 @@ process_user_input(A, US, UserInput) :-
 process_user_input(A, US, UserInput) :-
     UserInput \= 'cofnij',
     prompt_user_input(A, US, UserInput).
+      
 	
 inst_one(A/B, UnitedState, A) :-
     % zeby nie generowac nowych zmiennych postaci Zmienna/Zmienna2 po nawrocie
@@ -247,7 +248,8 @@ inst_one(A/B, UnitedState, A) :-
 	goal_achieved(B, UnitedState).
 	
 inst_one(A, UnitedState, A) :-
-	nonvar(A),
+	% uncomment for testing 
+	% nonvar(A),
 	non_slash(A).
 
 perform_action(State1, move(What, From, On), [on(What, On), clear(From) | PartialRes]) :-
