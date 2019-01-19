@@ -30,7 +30,7 @@ my_trace(1,ProcName, Clause, ArgList) :-
 	nl, nl, nl, write(ProcName),
 	write('   klauzula   '), write(Clause),
 	write('    wejœcie'),
-	write_args(ArgList), nl, read(_).
+	write_args(ArgList), nl. %read(_).
 
 
 %w celu wyprowadzenia komunikatu o wywo³aniu innej procedury
@@ -80,7 +80,7 @@ my_trace_rec(1,ProcName, Clause,Level, ArgList) :-
 	write('   poziom   '), write(Level),
 	write('   klauzula   '), write(Clause),
 	write('    wejœcie'),
-	write_args(ArgList), nl, read(_).
+	write_args(ArgList), nl. %read(_).
 
 
 %w celu wyprowadzenia komunikatu o wywo³aniu innej procedury
@@ -96,7 +96,7 @@ my_trace_rec(3,ProcName, Clause, Level,ProcName2, ArgList) :-
 	write('   poziom   '), write(Level),
 	write('   klauzula   '), write(Clause),
 	nl,write('po wykonaniu   '), write(ProcName2),
-	write_args(ArgList), nl, read(_).
+	write_args(ArgList), nl. %read(_).
 
 % w celu wyprowadzenia wartoœci zmiennych na zakoñczenie
 % wykonania procedury na danym poziomioe rekurencji
@@ -117,4 +117,4 @@ end_trace(Level,ProcName)  :-
 
 end_trace(Level,_)  :-
 	Level >= 1,
-	nl, read(_).
+	nl. %read(_).

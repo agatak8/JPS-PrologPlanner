@@ -1,8 +1,7 @@
-is_between(Begin, End, Begin) :-
-	Begin =< End.
+is_between(Begin, _, Begin).
 	
 is_between(Begin, End, Result) :-
-	Begin =< End,
+	Begin < End,
 	BeginIncr is Begin + 1,
 	is_between(BeginIncr, End, Result).
 	
@@ -28,3 +27,10 @@ safe_diff(A, B/_) :-
 
 safe_diff(A, B) :-
 	dif(A, B).
+	
+intersect([], _, []).
+intersect([E|RestA], B, [E|Result]) :-
+    member(E, B), !,
+    intersect(RestA, B, Result).
+intersect([E|RestA], B, Result) :-
+    intersect(RestA, B, Result).

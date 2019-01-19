@@ -10,7 +10,14 @@ initialState(
 	clear(d),
 	clear(p3),
 	clear(p4),
-	clear(p5)]
+	clear(p5),
+	on(h, i),
+	on(i, j),
+	on(j, k),
+	on(k, l),
+	on(l, m),
+	on(m, p6),
+	clear(p6)]
 ).
 
 imports :-
@@ -148,7 +155,21 @@ testEq :-
     A is 1,
     B is 2.
 
-planTest :-
+planTest1 :-
+	imports,
+	initialState(State),
+	plan_wrapper(State, [on(a, f)], 5, Plan, FinalState),
+	write("Plan: "),
+	write_ln(Plan).
+
+planTest2 :-
+	imports,
+	initialState(State),
+    plan_wrapper(State, [clear(a), clear(e), clear(d), clear(f), clear(g)], 1, Plan, FinalState),
+	write("Plan: "),
+	write_ln(Plan).
+	
+planTest3 :-
 	imports,
 	initialState(State),
 	plan_wrapper(State, [on(a, f)], 3, Plan, FinalState),
