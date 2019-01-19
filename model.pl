@@ -155,7 +155,7 @@ testEq :-
 planTest1 :-
 	imports,
 	initialState(State),
-	plan_wrapper(State, [on(a, f)], 1, Plan, FinalState),
+	plan_wrapper(State, [on(a, g)], 3, Plan, FinalState),
 	write("Plan: "),
 	write_ln(Plan).
 

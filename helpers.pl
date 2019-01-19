@@ -1,4 +1,5 @@
-is_between(Begin, _, Begin).
+is_between(Begin, End, Begin) :-
+    Begin < End.
 	
 is_between(Begin, End, Result) :-
 	Begin < End,

@@ -1,0 +1,387 @@
+
+plan_wrapper   poziom   0   klauzula   1
+wywo³anie   plan
+
+
+
+plan   poziom   0   klauzula   1    wejœcie
+State=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[on(a,g)]
+AchievedGoals=[]
+Limit=3
+RecursionLevel=0
+
+plan   poziom   0   klauzula   1
+wywo³anie   goals_achieved
+
+
+
+plan   poziom   0   klauzula   2    wejœcie
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[on(a,g)]
+AchievedGoals=[]
+Limit=3
+RecursionLevel=0
+
+plan   poziom   0   klauzula   2
+wywo³anie   choose_goal
+
+plan   poziom   0   klauzula   2
+po wykonaniu   choose_goal
+Goal=on(a,g)
+Goals=[on(a,g)]
+RestGoals=[]
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+
+plan   poziom   0   klauzula   2
+wywo³anie   achieves
+
+plan   poziom   0   klauzula   2
+po wykonaniu   achieves
+Goal=on(a,g)
+Action=move(a,_G1358/on(a,_G1358),g)
+
+plan   poziom   0   klauzula   2
+wywo³anie   requires
+
+plan   poziom   0   klauzula   2
+po wykonaniu   requires
+Action=move(a,_G1358/on(a,_G1358),g)
+CondGoals=[clear(a),clear(g)]
+Conditions=[on(a,_G1358)]
+
+plan   poziom   0   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   1   klauzula   1    wejœcie
+State=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(a),clear(g)]
+AchievedGoals=[]
+Limit=0
+RecursionLevel=1
+
+plan   poziom   1   klauzula   1
+wywo³anie   goals_achieved
+Cele niespełnione i limit <= 0. Nastąpi nawrót. Poziom rekurencji: 1
+
+
+
+plan   poziom   1   klauzula   2    wejœcie
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(a),clear(g)]
+AchievedGoals=[]
+Limit=0
+RecursionLevel=1
+
+plan   poziom   0   klauzula   2
+wywo³anie   choose_goal
+
+plan   poziom   0   klauzula   2
+po wykonaniu   choose_goal
+Goal=on(a,g)
+Goals=[on(a,g)]
+RestGoals=[]
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+
+plan   poziom   0   klauzula   2
+wywo³anie   achieves
+
+plan   poziom   0   klauzula   2
+po wykonaniu   achieves
+Goal=on(a,g)
+Action=move(a,_G1358/on(a,_G1358),g)
+
+plan   poziom   0   klauzula   2
+wywo³anie   requires
+
+plan   poziom   0   klauzula   2
+po wykonaniu   requires
+Action=move(a,_G1358/on(a,_G1358),g)
+CondGoals=[clear(a),clear(g)]
+Conditions=[on(a,_G1358)]
+
+plan   poziom   0   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   1   klauzula   1    wejœcie
+State=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(a),clear(g)]
+AchievedGoals=[]
+Limit=1
+RecursionLevel=1
+
+plan   poziom   1   klauzula   1
+wywo³anie   goals_achieved
+
+
+
+plan   poziom   1   klauzula   2    wejœcie
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(a),clear(g)]
+AchievedGoals=[]
+Limit=1
+RecursionLevel=1
+
+plan   poziom   1   klauzula   2
+wywo³anie   choose_goal
+
+plan   poziom   1   klauzula   2
+po wykonaniu   choose_goal
+Goal=clear(g)
+Goals=[clear(a),clear(g)]
+RestGoals=[clear(a)]
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+
+plan   poziom   1   klauzula   2
+wywo³anie   achieves
+
+plan   poziom   1   klauzula   2
+po wykonaniu   achieves
+Goal=clear(g)
+Action=move(_G1477/on(_G1477,g),g,_G1475)
+
+plan   poziom   1   klauzula   2
+wywo³anie   requires
+
+plan   poziom   1   klauzula   2
+po wykonaniu   requires
+Action=move(_G1477/on(_G1477,g),g,_G1475)
+CondGoals=[clear(_G1477/on(_G1477,g))]
+Conditions=[clear(_G1475),safe_diff(_G1475,_G1477/on(_G1477,g))]
+
+plan   poziom   1   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   2   klauzula   1    wejœcie
+State=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(_G1477/on(_G1477,g))]
+AchievedGoals=[]
+Limit=0
+RecursionLevel=2
+
+plan   poziom   2   klauzula   1
+wywo³anie   goals_achieved
+Cele niespełnione i limit <= 0. Nastąpi nawrót. Poziom rekurencji: 2
+
+
+
+plan   poziom   2   klauzula   2    wejœcie
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(_G1477/on(_G1477,g))]
+AchievedGoals=[]
+Limit=0
+RecursionLevel=2
+
+plan   poziom   0   klauzula   2
+wywo³anie   choose_goal
+
+plan   poziom   0   klauzula   2
+po wykonaniu   choose_goal
+Goal=on(a,g)
+Goals=[on(a,g)]
+RestGoals=[]
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+
+plan   poziom   0   klauzula   2
+wywo³anie   achieves
+
+plan   poziom   0   klauzula   2
+po wykonaniu   achieves
+Goal=on(a,g)
+Action=move(a,_G1358/on(a,_G1358),g)
+
+plan   poziom   0   klauzula   2
+wywo³anie   requires
+
+plan   poziom   0   klauzula   2
+po wykonaniu   requires
+Action=move(a,_G1358/on(a,_G1358),g)
+CondGoals=[clear(a),clear(g)]
+Conditions=[on(a,_G1358)]
+
+plan   poziom   0   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   1   klauzula   1    wejœcie
+State=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(a),clear(g)]
+AchievedGoals=[]
+Limit=2
+RecursionLevel=1
+
+plan   poziom   1   klauzula   1
+wywo³anie   goals_achieved
+
+
+
+plan   poziom   1   klauzula   2    wejœcie
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(a),clear(g)]
+AchievedGoals=[]
+Limit=2
+RecursionLevel=1
+
+plan   poziom   1   klauzula   2
+wywo³anie   choose_goal
+
+plan   poziom   1   klauzula   2
+po wykonaniu   choose_goal
+Goal=clear(g)
+Goals=[clear(a),clear(g)]
+RestGoals=[clear(a)]
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+
+plan   poziom   1   klauzula   2
+wywo³anie   achieves
+
+plan   poziom   1   klauzula   2
+po wykonaniu   achieves
+Goal=clear(g)
+Action=move(_G1477/on(_G1477,g),g,_G1475)
+
+plan   poziom   1   klauzula   2
+wywo³anie   requires
+
+plan   poziom   1   klauzula   2
+po wykonaniu   requires
+Action=move(_G1477/on(_G1477,g),g,_G1475)
+CondGoals=[clear(_G1477/on(_G1477,g))]
+Conditions=[clear(_G1475),safe_diff(_G1475,_G1477/on(_G1477,g))]
+
+plan   poziom   1   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   2   klauzula   1    wejœcie
+State=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(_G1477/on(_G1477,g))]
+AchievedGoals=[]
+Limit=0
+RecursionLevel=2
+
+plan   poziom   2   klauzula   1
+wywo³anie   goals_achieved
+Cele niespełnione i limit <= 0. Nastąpi nawrót. Poziom rekurencji: 2
+
+
+
+plan   poziom   2   klauzula   2    wejœcie
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(_G1477/on(_G1477,g))]
+AchievedGoals=[]
+Limit=0
+RecursionLevel=2
+
+plan   poziom   1   klauzula   2
+wywo³anie   choose_goal
+
+plan   poziom   1   klauzula   2
+po wykonaniu   choose_goal
+Goal=clear(g)
+Goals=[clear(a),clear(g)]
+RestGoals=[clear(a)]
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+
+plan   poziom   1   klauzula   2
+wywo³anie   achieves
+
+plan   poziom   1   klauzula   2
+po wykonaniu   achieves
+Goal=clear(g)
+Action=move(_G1477/on(_G1477,g),g,_G1475)
+
+plan   poziom   1   klauzula   2
+wywo³anie   requires
+
+plan   poziom   1   klauzula   2
+po wykonaniu   requires
+Action=move(_G1477/on(_G1477,g),g,_G1475)
+CondGoals=[clear(_G1477/on(_G1477,g))]
+Conditions=[clear(_G1475),safe_diff(_G1475,_G1477/on(_G1477,g))]
+
+plan   poziom   1   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   2   klauzula   1    wejœcie
+State=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(_G1477/on(_G1477,g))]
+AchievedGoals=[]
+Limit=1
+RecursionLevel=2
+
+plan   poziom   2   klauzula   1
+wywo³anie   goals_achieved
+
+
+
+plan   poziom   2   klauzula   2    wejœcie
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(_G1477/on(_G1477,g))]
+AchievedGoals=[]
+Limit=1
+RecursionLevel=2
+
+plan   poziom   2   klauzula   2
+wywo³anie   choose_goal
+
+plan   poziom   2   klauzula   2
+po wykonaniu   choose_goal
+Goal=clear(_G1477/on(_G1477,g))
+Goals=[clear(_G1477/on(_G1477,g))]
+RestGoals=[]
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+
+plan   poziom   2   klauzula   2
+wywo³anie   achieves
+
+plan   poziom   2   klauzula   2
+po wykonaniu   achieves
+Goal=clear(_G1477/on(_G1477,g))
+Action=move(_G1593/on(_G1593,_G1477/on(_G1477,g)),_G1477/on(_G1477,g),_G1591)
+
+plan   poziom   2   klauzula   2
+wywo³anie   requires
+
+plan   poziom   2   klauzula   2
+po wykonaniu   requires
+Action=move(_G1593/on(_G1593,_G1477/on(_G1477,g)),_G1477/on(_G1477,g),_G1591)
+CondGoals=[clear(_G1593/on(_G1593,_G1477/on(_G1477,g)))]
+Conditions=[clear(_G1591),safe_diff(_G1591,_G1593/on(_G1593,_G1477/on(_G1477,g)))]
+
+plan   poziom   2   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   3   klauzula   1    wejœcie
+State=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(_G1593/on(_G1593,_G1477/on(_G1477,g)))]
+AchievedGoals=[]
+Limit=0
+RecursionLevel=3
+
+plan   poziom   3   klauzula   1
+wywo³anie   goals_achieved
+Cele niespełnione i limit <= 0. Nastąpi nawrót. Poziom rekurencji: 3
+
+
+
+plan   poziom   3   klauzula   2    wejœcie
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(_G1593/on(_G1593,_G1477/on(_G1477,g)))]
+AchievedGoals=[]
+Limit=0
+RecursionLevel=3
+false.
+

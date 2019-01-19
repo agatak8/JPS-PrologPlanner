@@ -1,0 +1,688 @@
+
+plan_wrapper   poziom   0   klauzula   1
+wywo³anie   plan
+
+
+
+plan   poziom   0   klauzula   1    wejœcie
+State=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(a),clear(e),clear(d),clear(f),clear(g)]
+AchievedGoals=[clear(a),clear(d)]
+Limit=3
+RecursionLevel=0
+
+plan   poziom   0   klauzula   1
+wywo³anie   goals_achieved
+
+
+
+plan   poziom   0   klauzula   2    wejœcie
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(a),clear(e),clear(d),clear(f),clear(g)]
+AchievedGoals=[clear(a),clear(d)]
+Limit=3
+RecursionLevel=0
+
+plan   poziom   0   klauzula   2
+wywo³anie   choose_goal
+
+plan   poziom   0   klauzula   2
+po wykonaniu   choose_goal
+Goal=clear(e)
+Goals=[clear(a),clear(e),clear(d),clear(f),clear(g)]
+RestGoals=[clear(a),clear(d),clear(f),clear(g)]
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+
+plan   poziom   0   klauzula   2
+wywo³anie   achieves
+
+plan   poziom   0   klauzula   2
+po wykonaniu   achieves
+Goal=clear(e)
+Action=move(_G1386/on(_G1386,e),e,_G1384)
+
+plan   poziom   0   klauzula   2
+wywo³anie   requires
+
+plan   poziom   0   klauzula   2
+po wykonaniu   requires
+Action=move(_G1386/on(_G1386,e),e,_G1384)
+CondGoals=[clear(_G1386/on(_G1386,e))]
+Conditions=[clear(_G1384),safe_diff(_G1384,_G1386/on(_G1386,e))]
+
+plan   poziom   0   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   1   klauzula   1    wejœcie
+State=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(_G1386/on(_G1386,e))]
+AchievedGoals=[clear(a),clear(d)]
+Limit=0
+RecursionLevel=1
+
+plan   poziom   1   klauzula   1
+wywo³anie   goals_achieved
+
+plan   poziom   1   klauzula   1
+po wykonaniu   goals_achieved
+result=true
+
+plan   poziom   0   klauzula   2
+po wykonaniu   plan
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(a),clear(e),clear(d),clear(f),clear(g)]
+LimitPre=0
+RecursionLevel=0
+State1=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+PrePlan=[]
+
+plan   poziom   0   klauzula   2
+wywo³anie   inst_action
+
+plan   poziom   0   klauzula   2
+po wykonaniu   inst_action
+Action=move(d/on(d,e),e,a)
+Conditions=[clear(a),safe_diff(a,d/on(d,e))]
+State1=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+InstAction=move(d,e,a)
+
+plan   poziom   0   klauzula   2
+wywo³anie   check_action
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(d,e,a)
+Goal=clear(a)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+chosen action would destroy goal
+
+plan   poziom   0   klauzula   2
+po wykonaniu   inst_action
+Action=move(d/on(d,e),e,p3)
+Conditions=[clear(p3),safe_diff(p3,d/on(d,e))]
+State1=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+InstAction=move(d,e,p3)
+
+plan   poziom   0   klauzula   2
+wywo³anie   check_action
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(d,e,p3)
+Goal=clear(a)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(d,e,p3)
+Goal=clear(d)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+plan   poziom   0   klauzula   2
+po wykonaniu   check_action
+result=true
+
+plan   poziom   0   klauzula   2
+wywo³anie   perform_action
+
+plan   poziom   0   klauzula   2
+po wykonaniu   perform_action
+State1=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+InstAction=move(d,e,p3)
+State2=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+
+plan   poziom   0   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   1   klauzula   1    wejœcie
+State=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+Goals=[clear(a),clear(d),clear(f),clear(g)]
+AchievedGoals=[clear(e),clear(a),clear(d)]
+Limit=2
+RecursionLevel=1
+
+plan   poziom   1   klauzula   1
+wywo³anie   goals_achieved
+
+
+
+plan   poziom   1   klauzula   2    wejœcie
+InitState=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+Goals=[clear(a),clear(d),clear(f),clear(g)]
+AchievedGoals=[clear(e),clear(a),clear(d)]
+Limit=2
+RecursionLevel=1
+
+plan   poziom   1   klauzula   2
+wywo³anie   choose_goal
+
+plan   poziom   1   klauzula   2
+po wykonaniu   choose_goal
+Goal=clear(f)
+Goals=[clear(a),clear(d),clear(f),clear(g)]
+RestGoals=[clear(a),clear(d),clear(g)]
+InitState=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+
+plan   poziom   1   klauzula   2
+wywo³anie   achieves
+
+plan   poziom   1   klauzula   2
+po wykonaniu   achieves
+Goal=clear(f)
+Action=move(_G1798/on(_G1798,f),f,_G1796)
+
+plan   poziom   1   klauzula   2
+wywo³anie   requires
+
+plan   poziom   1   klauzula   2
+po wykonaniu   requires
+Action=move(_G1798/on(_G1798,f),f,_G1796)
+CondGoals=[clear(_G1798/on(_G1798,f))]
+Conditions=[clear(_G1796),safe_diff(_G1796,_G1798/on(_G1798,f))]
+
+plan   poziom   1   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   2   klauzula   1    wejœcie
+State=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+Goals=[clear(_G1798/on(_G1798,f))]
+AchievedGoals=[clear(e),clear(a),clear(d)]
+Limit=0
+RecursionLevel=2
+
+plan   poziom   2   klauzula   1
+wywo³anie   goals_achieved
+
+plan   poziom   2   klauzula   1
+po wykonaniu   goals_achieved
+result=true
+
+plan   poziom   1   klauzula   2
+po wykonaniu   plan
+InitState=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+Goals=[clear(a),clear(d),clear(f),clear(g)]
+LimitPre=0
+RecursionLevel=1
+State1=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+PrePlan=[]
+
+plan   poziom   1   klauzula   2
+wywo³anie   inst_action
+
+plan   poziom   1   klauzula   2
+po wykonaniu   inst_action
+Action=move(e/on(e,f),f,a)
+Conditions=[clear(a),safe_diff(a,e/on(e,f))]
+State1=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+InstAction=move(e,f,a)
+
+plan   poziom   1   klauzula   2
+wywo³anie   check_action
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(e,f,a)
+Goal=clear(e)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(e,f,a)
+Goal=clear(a)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+chosen action would destroy goal
+
+plan   poziom   1   klauzula   2
+po wykonaniu   inst_action
+Action=move(e/on(e,f),f,d)
+Conditions=[clear(d),safe_diff(d,e/on(e,f))]
+State1=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+InstAction=move(e,f,d)
+
+plan   poziom   1   klauzula   2
+wywo³anie   check_action
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(e,f,d)
+Goal=clear(e)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(e,f,d)
+Goal=clear(a)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(e,f,d)
+Goal=clear(d)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+chosen action would destroy goal
+
+plan   poziom   1   klauzula   2
+po wykonaniu   inst_action
+Action=move(e/on(e,f),f,p4)
+Conditions=[clear(p4),safe_diff(p4,e/on(e,f))]
+State1=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+InstAction=move(e,f,p4)
+
+plan   poziom   1   klauzula   2
+wywo³anie   check_action
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(e,f,p4)
+Goal=clear(e)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(e,f,p4)
+Goal=clear(a)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(e,f,p4)
+Goal=clear(d)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+plan   poziom   1   klauzula   2
+po wykonaniu   check_action
+result=true
+
+plan   poziom   1   klauzula   2
+wywo³anie   perform_action
+
+plan   poziom   1   klauzula   2
+po wykonaniu   perform_action
+State1=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+InstAction=move(e,f,p4)
+State2=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+
+plan   poziom   1   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   2   klauzula   1    wejœcie
+State=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+Goals=[clear(a),clear(d),clear(g)]
+AchievedGoals=[clear(f),clear(e),clear(a),clear(d)]
+Limit=1
+RecursionLevel=2
+
+plan   poziom   2   klauzula   1
+wywo³anie   goals_achieved
+
+
+
+plan   poziom   2   klauzula   2    wejœcie
+InitState=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+Goals=[clear(a),clear(d),clear(g)]
+AchievedGoals=[clear(f),clear(e),clear(a),clear(d)]
+Limit=1
+RecursionLevel=2
+
+plan   poziom   2   klauzula   2
+wywo³anie   choose_goal
+
+plan   poziom   2   klauzula   2
+po wykonaniu   choose_goal
+Goal=clear(g)
+Goals=[clear(a),clear(d),clear(g)]
+RestGoals=[clear(a),clear(d)]
+InitState=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+
+plan   poziom   2   klauzula   2
+wywo³anie   achieves
+
+plan   poziom   2   klauzula   2
+po wykonaniu   achieves
+Goal=clear(g)
+Action=move(_G2228/on(_G2228,g),g,_G2226)
+
+plan   poziom   2   klauzula   2
+wywo³anie   requires
+
+plan   poziom   2   klauzula   2
+po wykonaniu   requires
+Action=move(_G2228/on(_G2228,g),g,_G2226)
+CondGoals=[clear(_G2228/on(_G2228,g))]
+Conditions=[clear(_G2226),safe_diff(_G2226,_G2228/on(_G2228,g))]
+
+plan   poziom   2   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   3   klauzula   1    wejœcie
+State=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+Goals=[clear(_G2228/on(_G2228,g))]
+AchievedGoals=[clear(f),clear(e),clear(a),clear(d)]
+Limit=0
+RecursionLevel=3
+
+plan   poziom   3   klauzula   1
+wywo³anie   goals_achieved
+
+plan   poziom   3   klauzula   1
+po wykonaniu   goals_achieved
+result=true
+
+plan   poziom   2   klauzula   2
+po wykonaniu   plan
+InitState=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+Goals=[clear(a),clear(d),clear(g)]
+LimitPre=0
+RecursionLevel=2
+State1=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+PrePlan=[]
+
+plan   poziom   2   klauzula   2
+wywo³anie   inst_action
+
+plan   poziom   2   klauzula   2
+po wykonaniu   inst_action
+Action=move(f/on(f,g),g,e)
+Conditions=[clear(e),safe_diff(e,f/on(f,g))]
+State1=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+InstAction=move(f,g,e)
+
+plan   poziom   2   klauzula   2
+wywo³anie   check_action
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,e)
+Goal=clear(f)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,e)
+Goal=clear(e)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+chosen action would destroy goal
+
+plan   poziom   2   klauzula   2
+po wykonaniu   inst_action
+Action=move(f/on(f,g),g,a)
+Conditions=[clear(a),safe_diff(a,f/on(f,g))]
+State1=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+InstAction=move(f,g,a)
+
+plan   poziom   2   klauzula   2
+wywo³anie   check_action
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,a)
+Goal=clear(f)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,a)
+Goal=clear(e)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,a)
+Goal=clear(a)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+chosen action would destroy goal
+
+plan   poziom   2   klauzula   2
+po wykonaniu   inst_action
+Action=move(f/on(f,g),g,d)
+Conditions=[clear(d),safe_diff(d,f/on(f,g))]
+State1=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+InstAction=move(f,g,d)
+
+plan   poziom   2   klauzula   2
+wywo³anie   check_action
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,d)
+Goal=clear(f)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,d)
+Goal=clear(e)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,d)
+Goal=clear(a)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,d)
+Goal=clear(d)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+chosen action would destroy goal
+
+plan   poziom   2   klauzula   2
+po wykonaniu   inst_action
+Action=move(f/on(f,g),g,p5)
+Conditions=[clear(p5),safe_diff(p5,f/on(f,g))]
+State1=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+InstAction=move(f,g,p5)
+
+plan   poziom   2   klauzula   2
+wywo³anie   check_action
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,p5)
+Goal=clear(f)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,p5)
+Goal=clear(e)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,p5)
+Goal=clear(a)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+
+
+check_action   poziom   -1   klauzula   2    wejœcie
+InstAction=move(f,g,p5)
+Goal=clear(d)
+
+check_action   poziom   -1   klauzula   2
+wywo³anie   action_destroys_goal
+
+plan   poziom   2   klauzula   2
+po wykonaniu   check_action
+result=true
+
+plan   poziom   2   klauzula   2
+wywo³anie   perform_action
+
+plan   poziom   2   klauzula   2
+po wykonaniu   perform_action
+State1=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+InstAction=move(f,g,p5)
+State2=[on(f,p5),clear(g),on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(g,p2),clear(a),clear(d)]
+
+plan   poziom   2   klauzula   2
+wywo³anie   plan
+
+
+
+plan   poziom   3   klauzula   1    wejœcie
+State=[on(f,p5),clear(g),on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(g,p2),clear(a),clear(d)]
+Goals=[clear(a),clear(d)]
+AchievedGoals=[clear(g),clear(f),clear(e),clear(a),clear(d)]
+Limit=0
+RecursionLevel=3
+
+plan   poziom   3   klauzula   1
+wywo³anie   goals_achieved
+
+plan   poziom   3   klauzula   1
+po wykonaniu   goals_achieved
+result=true
+
+plan   poziom   2   klauzula   2
+po wykonaniu   plan
+State2=[on(f,p5),clear(g),on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(g,p2),clear(a),clear(d)]
+RestGoals=[clear(a),clear(d)]
+LimitPost=0
+RecursionLevel=2
+FinalState=[on(f,p5),clear(g),on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(g,p2),clear(a),clear(d)]
+PostPlan=[]
+
+plan   poziom   2   klauzula   2
+KONIEC WYKONANIA NA POZIOMIE  2
+InitState=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+Goals=[clear(a),clear(d),clear(g)]
+Limit=1
+RecursionLevel=2
+FinalState=[on(f,p5),clear(g),on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(g,p2),clear(a),clear(d)]
+Plan=[move(f,g,p5)]
+
+plan   poziom   1   klauzula   2
+po wykonaniu   plan
+State2=[on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(f,g),on(g,p2),clear(a),clear(d),clear(p5)]
+RestGoals=[clear(a),clear(d),clear(g)]
+LimitPost=1
+RecursionLevel=1
+FinalState=[on(f,p5),clear(g),on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(g,p2),clear(a),clear(d)]
+PostPlan=[move(f,g,p5)]
+
+plan   poziom   1   klauzula   2
+KONIEC WYKONANIA NA POZIOMIE  1
+InitState=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+Goals=[clear(a),clear(d),clear(f),clear(g)]
+Limit=2
+RecursionLevel=1
+FinalState=[on(f,p5),clear(g),on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(g,p2),clear(a),clear(d)]
+Plan=[move(e,f,p4),move(f,g,p5)]
+
+KONIEC ŒLEDZENIA  plan
+
+
+plan   poziom   0   klauzula   2
+po wykonaniu   plan
+State2=[on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p4),clear(p5)]
+RestGoals=[clear(a),clear(d),clear(f),clear(g)]
+LimitPost=2
+RecursionLevel=0
+FinalState=[on(f,p5),clear(g),on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(g,p2),clear(a),clear(d)]
+PostPlan=[move(e,f,p4),move(f,g,p5)]
+
+plan   poziom   0   klauzula   2
+KONIEC WYKONANIA NA POZIOMIE  0
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(a),clear(e),clear(d),clear(f),clear(g)]
+Limit=3
+RecursionLevel=0
+FinalState=[on(f,p5),clear(g),on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(g,p2),clear(a),clear(d)]
+Plan=[move(d,e,p3),move(e,f,p4),move(f,g,p5)]
+
+KONIEC ŒLEDZENIA  plan
+
+
+plan_wrapper   poziom   0   klauzula   1
+po wykonaniu   plan
+InitState=[on(a,b),on(b,c),on(c,p1),on(d,e),on(e,f),on(f,g),on(g,p2),clear(a),clear(d),clear(p3),clear(p4),clear(p5)]
+Goals=[clear(a),clear(e),clear(d),clear(f),clear(g)]
+AchievedGoals=[clear(a),clear(d)]
+Limit=3
+RecursionLevel=0
+FinalState=[on(f,p5),clear(g),on(e,p4),clear(f),on(d,p3),clear(e),on(a,b),on(b,c),on(c,p1),on(g,p2),clear(a),clear(d)]
+Plan=[move(d,e,p3),move(e,f,p4),move(f,g,p5)]
+Plan: [move(d,e,p3),move(e,f,p4),move(f,g,p5)]
+true Action? 
