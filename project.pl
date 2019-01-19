@@ -2,27 +2,43 @@ plan_wrapper(InitState, Goals, MaxLimit, Plan, FinalState) :-
 	consult('helpers.pl'),
 	consult('debug.pl'),
 	is_between(0, MaxLimit, Limit),
-	my_trace_rec(1, plan_wrapper, 1, 0, []),
-	plan(InitState, Goals, [], Limit, Plan, FinalState, 0).
+	my_trace_rec(2, plan_wrapper, 1, 0, plan),
+	plan(InitState, Goals, [], Limit, Plan, FinalState, 0),
+	my_trace_rec(3, plan_wrapper, 1, 0, plan, ['InitState'/InitState, 'Goals'/Goals, 'AchievedGoals'/[], 'Limit'/Limit, 'RecurssionLevel'/0, 'FinalState'/FinalState, 'Plan'/Plan]).  
 
 plan(State, Goals, AchievedGoals, _, [], State, RecursionLevel) :-
 	my_trace_rec(2, plan, 1, RecursionLevel, goals_achieved),
 	goals_achieved(Goals, State),
-    my_trace_rec(3, plan, 1, RecursionLevel, goals_achieved, ['result'/true])
+    	my_trace_rec(3, plan, 1, RecursionLevel, goals_achieved, ['result'/true]).
 	
 plan(InitState, Goals, AchievedGoals, Limit, Plan, FinalState, RecursionLevel) :-
+	my_trace_rec(1, plan, 2, RecurssionLevel, ['InitState'/InitState, 'Goals'/Goals, 'AchievedGoals'/[], 'Limit'/Limit, 'RecurssionLevel'/RecursionLevel, 'FinalState'/FinalState, 'Plan'/Plan]),
 	Limit > 0,
 	is_between(0, Limit-1, LimitPre),
+	my_trace_rec(2, plan, 2, RecurssionLevel, choose_goal),
 	choose_goal(Goal, Goals, RestGoals, InitState),
+	my_trace_rec(3, plan, 2, RecurssionLevel, choose_goal, ['Goal'/Goal, 'Goals'/Goals, 'RestGoals'/RestGoals, 'InitState'/InitState ]),
+	my_trace_rec(2, plan, 2, RecurssionLevel, achieves),
 	achieves(Goal, Action),
+	my_trace_rec(3, plan, 2, RecurssionLevel, achieves, ['Goal'/Goal, 'Action'/Action]),
+	my_trace_rec(2, plan, 2, RecurssionLevel, requires),
 	requires(Action, CondGoals, Conditions),
+	my_trace_rec(3, plan, 2, RecurssionLevel, requires, ['Action'/Action, 'CondGoals'/CondGoals, 'Conditions'/Conditions]),
 	Rec2 is RecursionLevel + 1,
+	my_trace_rec(2, plan, 2, RecurssionLevel, plan),
 	plan(InitState, CondGoals, AchievedGoals, LimitPre, PrePlan, State1, Rec2),
+	my_trace_rec(2, plan, 2, RecurssionLevel, inst_action),
 	inst_action(Action, Conditions, State1, InstAction),
+	my_trace_rec(3, plan, 2, RecurssionLevel, inst_action, ['Action'/Action, 'Conditions'/Conditions, 'State1'/State1, 'InstAction'/InstAction]),
+	my_trace_rec(2, plan, 2, RecurssionLevel, perform_action),
 	perform_action(State1, InstAction, State2),
+	my_trace_rec(3, plan, 2, RecurssionLevel, perform_action, ['State1'/State1, 'InstAction'/InstAction, 'State2'/State2]),
 	LimitPost is Limit - LimitPre,
+	my_trace_rec(2, plan, 2, RecurssionLevel, plan),
 	plan(State2, RestGoals, [Goal | AchievedGoals], LimitPost, PostPlan, FinalState, Rec2),
-	conc(PrePlan, [InstAction | PostPlan ], Plan).
+	my_trace_rec(3, plan, 2, RecurssionLevel, plan, ['InitState'/InitState, 'Goals'/Goals, 'AchievedGoals'/[Goal | AchievedGoals], 'LimitPost'/LimitPost, 'RecurssionLevel'/RecursionLevel, 'FinalState'/FinalState, 'PostPlan'/PostPlan]),
+	conc(PrePlan, [InstAction | PostPlan ], Plan),
+	my_trace_rec(4, plan, 2, RecursionLevel, ['InitState'/InitState, 'Goals'/Goals, 'AchievedGoals'/[], 'Limit'/Limit, 'RecurssionLevel'/RecursionLevel, 'FinalState'/FinalState, 'Plan'/Plan]).
 
 goals_achieved([], _).
 
