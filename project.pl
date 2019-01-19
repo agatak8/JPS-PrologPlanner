@@ -1,10 +1,14 @@
 plan_wrapper(InitState, Goals, MaxLimit, Plan, FinalState) :-
 	consult('helpers.pl'),
+	consult('debug.pl'),
 	is_between(0, MaxLimit, Limit),
+	my_trace_rec(1, plan_wrapper, 1, 0, []),
 	plan(InitState, Goals, [], Limit, Plan, FinalState, 0).
 
 plan(State, Goals, AchievedGoals, _, [], State, RecursionLevel) :-
-	goals_achieved(Goals, State).
+	my_trace_rec(2, plan, 1, RecursionLevel, goals_achieved),
+	goals_achieved(Goals, State),
+    my_trace_rec(3, plan, 1, RecursionLevel, goals_achieved, ['result'/true])
 	
 plan(InitState, Goals, AchievedGoals, Limit, Plan, FinalState, RecursionLevel) :-
 	Limit > 0,
