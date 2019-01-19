@@ -133,9 +133,9 @@ action_destroys_goal(move(What, From, _), on(What, From)) :-
 action_destroys_goal(move(_, _, On), clear(On)) :- write_ln('chosen action would destroy goal').
 
 inst_action(move(What, From, On), Conds, UnitedState, move(InstWhat, InstFrom, InstOn)) :-
-	inst_one(What, UnitedState, InstWhat),
-	inst_one(From, UnitedState, InstFrom),
-	inst_one(On, UnitedState, InstOn),
+	inst_test(What, UnitedState, InstWhat, move(What, From, On)),
+	inst_test(From, UnitedState, InstFrom, move(InstWhat, From, On)),
+	inst_test(On, UnitedState, InstOn, move(InstWhat, InstFrom, On)),
 	conds_achieved(Conds, UnitedState).
 
 conds_achieved([], _).
@@ -169,21 +169,22 @@ conds_achieved([HeadGoal | Rest], UnitedState) :-
 	goal_achieved(HeadGoal, UnitedState),
 	conds_achieved(Rest, UnitedState).
 
-inst_test(A, US, UI) :-
+inst_test(A, US, UI, _) :-
     nonvar(A),
     inst_one(A, US, UI).
 	
-inst_test(A, US, UI) :-
+inst_test(A, US, UI, Action) :-
     var(A),
-    prompt_user_input(A, US, UI).
+    prompt_user_input(A, US, UI, Action).
 
-prompt_user_input(A, UnitedState, UserInput) :-
+prompt_user_input(On, UnitedState, UserInput, move(What, _, On)) :-
+    write("Stan: "),
     write_ln(UnitedState),
-    write("Wybierz wartosc dla "),
-    write(A),
+    write("Podaj gdzie chcesz postawić klocka "),
+    write(What),
     write_ln(":"),
     read(UserInput),
-    process_user_input(A, UnitedState, UserInput), !.
+    process_user_input(On, UnitedState, UserInput), !.
 
 process_user_input(A, US, UserInput) :-
     UserInput \= 'cofnij'.
@@ -205,7 +206,7 @@ inst_one(A/B, UnitedState, A) :-
 	
 inst_one(A, UnitedState, A) :-
 	% uncomment for testing 
-	% nonvar(A),
+	nonvar(A),
 	non_slash(A).
 
 perform_action(State1, move(What, From, On), [on(What, On), clear(From) | PartialRes]) :-
